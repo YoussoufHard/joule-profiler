@@ -25,6 +25,20 @@ fn generates_completions_without_initializing_metric_sources() {
 }
 
 #[test]
+fn hides_autocomplete_from_general_help() {
+    let output = Command::new(joule_profiler_binary())
+        .arg("--help")
+        .output()
+        .unwrap();
+
+    assert!(output.status.success());
+    let help = String::from_utf8(output.stdout).unwrap();
+    assert!(!help.contains("autocomplete"));
+    assert!(help.contains("profile"));
+    assert!(help.contains("list-sensors"));
+}
+
+#[test]
 fn rejects_unsupported_completion_shell() {
     let output = Command::new(joule_profiler_binary())
         .args(["autocomplete", "elvish"])

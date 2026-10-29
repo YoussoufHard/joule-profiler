@@ -31,5 +31,6 @@ pub enum ProfilerCommand {
     ListSensors,
 
     /// Generate shell completion scripts.
+    #[command(hide = true)]
     Autocomplete(AutocompleteArgs),
 }
